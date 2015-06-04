@@ -1,6 +1,5 @@
 angular.module( 'ngBoilerplate.guest.login', [
   'ui.router'
-//  'Session'
 ])
 
 .config(function config( $stateProvider ) {
@@ -16,17 +15,17 @@ angular.module( 'ngBoilerplate.guest.login', [
   });
 })
 
-.controller( 'LoginCtrl', function LoginController( $scope, Session ) {
-    $scope.username = "";
-    $scope.password = "";
-    
-    console.log('session', Session);
+.controller( 'LoginCtrl', function LoginController( $scope, $state, Session ) {
+    $scope.username = "tester";
+    $scope.password = "testowe";
     
     $scope.logIn = function() {
-        console.log('username', $scope.username, 'password', $scope.password );
         Session.logIn({
-            username: $scope.username,
+            login: $scope.username,
             password: $scope.password
+        })
+        .then( function( token ) {
+            $state.go('home.map');
         });
     };
     

@@ -5,15 +5,30 @@ angular.module( 'ngBoilerplate', [
   'ngBoilerplate.guest',
   'Session',
   'ngStorage',
-  'ui.router'
+  'ui.router',
+  'ui.bootstrap',
+  'uiGmapgoogle-maps'
 ])
 
 .config( function myAppConfig ( $stateProvider, $urlRouterProvider, $locationProvider ) {
   $urlRouterProvider.otherwise( '/login' );
 })
 
-.run( function run () {
+.config( function( uiGmapGoogleMapApiProvider ) {
+    uiGmapGoogleMapApiProvider.configure({
+        //    key: 'your api key',
+        v: '3.17',
+        libraries: 'weather,geometry,visualization'
+    });
 })
+
+.run( 
+    function( $rootScope ) {
+        $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
+            throw error;
+        });
+    }
+)
 
 .controller( 'AppCtrl', function AppCtrl ( $scope, $location ) {
   $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
@@ -23,7 +38,7 @@ angular.module( 'ngBoilerplate', [
   });
 })
 
-.constant( 'SERVER_ADRESS', 'http://rest-stalkerweb.rhcloud.com/')
+.constant( 'SERVER_ADRESS', 'http://rest-stalkerweb.rhcloud.com')
 
 ;
 

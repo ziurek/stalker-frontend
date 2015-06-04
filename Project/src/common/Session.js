@@ -25,13 +25,24 @@ angular.module( 'Session', [] )
             return $http
             .post(SERVER_ADRESS + '/Stalker/Login', credentials)
             .then(function (res) {
-//                if (res.data.state === 1) {
-//                    return $q.reject(res.data.err);
-//                }
-                console.log('Session login response', res);
-                return res;
-//                return updateConnectionId(res.data.connectionId);
+                return updateToken(res.data.token);
             });
+        };
+        
+        authService.getToken = function() {
+            var d = $q.defer();
+
+            if (!token) {
+                token = $sessionStorage.token;
+            }
+
+            if (token) {
+                d.resolve(token);
+            } else {
+                d.reject('Not logged in');
+            }
+
+            return d.promise;
         };
         
         return authService;
