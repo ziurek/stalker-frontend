@@ -16,7 +16,17 @@ angular.module('ngBoilerplate.home.map', [
 })
 
 .controller('MapCtrl', function MapController( $scope ) {
-    $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+    $scope.map = { center: { latitude: 52.4, longitude: 19.3 }, zoom: 6 };
+    
+    $('.navbar').addClass('navbar-map');
+    
+    $("#main-map .angular-google-map-container")
+    .height($(window).height() - $('.navbar').height()-3);
+    $(window).on('resize', function(){
+        var win = $(this);
+        $("#main-map .angular-google-map-container")
+        .height(win.height() - $('.navbar').height()-3);
+  });
 })
 
 ;

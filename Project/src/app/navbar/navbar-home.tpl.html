@@ -1,19 +1,25 @@
 <ul class="nav navbar-nav">
     <li ui-sref-active="active">
-        <div class="btn-group stalk-dropdown" dropdown is-open="status.isopen">
+        <div class="btn-group stalk-dropdown" dropdown is-open="devicesDropdown.isopen">
             <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
                 Devices <span class="caret"></span>
             </button>
             <ul class="dropdown-menu pull-center" role="menu">
-                <li><a class="clickable" ng-click="">Device 1</a></li>
-                <li><a class="clickable" ng-click="">Device 2</a></li>
-                <li><a class="clickable" ng-click="">Device 3</a></li>
+                <li ng-repeat="device in devices">
+                    <a class="clickable" ng-click="">{{device.login}}</a>
+                </li>
             </ul>
         </div>
     </li>
     <li class="pull-right" ui-sref-active="active">
-        <a href ui-sref="home.account">
-            Account
-        </a>
+        <div class="btn-group stalk-dropdown" dropdown is-open="accountDropdown.isopen">
+            <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
+                Account <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu pull-right" role="menu">
+                <li><a ui-sref="home.account">Profile</a></li>
+                <li><a class="clickable" ng-click="logout()">Logout</a></li>
+            </ul>
+        </div>
     </li>
 </ul>

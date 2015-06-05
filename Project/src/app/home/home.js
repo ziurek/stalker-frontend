@@ -7,20 +7,113 @@ angular.module('ngBoilerplate.home', [
 
 .config(function config($stateProvider) {
     $stateProvider.state('home', {
-//        url: '/home',
+
         resolve: {
-            connectionId: [
+            token: [
                 'Session',
                 function (
                         Session
-                        ) {
+                ) {
                     return Session.getToken()
-                            .then(function (token) {
-                                return token;
+                        .then(function (token) {
+                            return token;
+                        });
+                }
+            ],
+            
+            backend: [
+                '$http',
+                'SERVER_ADRESS',
+                'token',
+
+                function (
+                    $http,
+                    SERVER_ADRESS,
+                    token
+                ) {
+                    var headers = {
+                        "X-Auth-Token": token
+                    };
+
+                    function wrapMethod (method) {
+                        return function (url, data) {
+                            return $http({
+                                method: method,
+                                headers: headers,
+                                url: SERVER_ADRESS + url,
+                                data: data
+                            })
+                            .then(function (res) {
+                                var data = res.data;
+                                return data;
                             });
+                        };
+                    }
+                    
+                    return _.mapValues({
+                        get: 'GET',
+                        post: 'POST',
+                        put: 'PUT',
+                        "delete": 'DELETE'
+                    }, wrapMethod);
+                }
+            ],
+            
+            devices : [
+                'backend',
+                function( backend ) {
+                    return backend.get('/Stalker/Users')
+                    .then( function( res ) {
+                        return res;
+                    });
+                }
+            ],
+            
+            devicesFull : [
+                'backend',
+                'devices',
+                '$q',
+                function( backend, devices, $q ) {
+                    var promises = [];
+                    for( var i=0; i < devices.length; i++ ) {
+                        promises.push( backend.get( devices[i].href ) );
+                    }
+                    return $q.all( promises );
+                }
+            ],
+            
+            devicesPositions : [
+                'backend',
+                'devicesFull',
+                '$q',
+                function( backend, devices, $q ) {
+                    var promises = [];
+                    for( var i=0; i < devices.length; i++ ) {
+                        promises.push( backend.get( devices[i].positions.href ) );
+                    }
+                    return $q.all( promises );
+                }
+            ],
+            
+            devicesPositionsFull : [
+                'backend',
+                'devicesPositions',
+                '$q',
+                function( backend, devices, $q ) {
+                    var promises = [];
+                    for( var i=0; i < devices.length; i++ ) {
+                        var positions = devices[i];
+                        var promisesEmbeded = [];
+                        for( var j=0; j < positions.length; j++ ) {
+                            promisesEmbeded.push( backend.get( positions[j].href ) );
+                        }
+                        promises.push( $q.all( promisesEmbeded ) );
+                    }
+                    return $q.all( promises );
                 }
             ]
         },
+        
         views: {
             "main": {
                 controller: 'HomeCtrl',
@@ -38,15 +131,38 @@ angular.module('ngBoilerplate.home', [
 .controller('HomeCtrl', function HomeController($scope) {
 })
 
-.controller('NavbarController', function NavbarController($scope) {
-    $scope.status = {
-        isopen: false
-    };
-    
-    // centering dropdown
-    var menu = $('.pull-center');
-    menu.css('margin-right', menu.outerWidth() / -2);
-})
+.controller('NavbarController', function NavbarController(
+        $scope, 
+        $state, 
+        Session, 
+        devicesFull,
+        devicesPositions,
+        devicesPositionsFull
+    ) {
+        $scope.devicesDropdown = {
+            isopen: false
+        };
+
+        $scope.accountDropdown = {
+            isopen: false
+        };
+
+        $scope.devices = devicesFull;
+        $scope.devicesPositions = devicesPositions;
+        console.log('devicesPositions', devicesPositionsFull);
+
+        $scope.logout = function() {
+            Session.logout()
+            .then( function() {
+                $state.go('guest.login');
+            });
+        };
+
+        // centering dropdown
+        var menu = $('.pull-center');
+        menu.css('margin-right', menu.outerWidth() / -2);
+    }
+)
 
 ;
 

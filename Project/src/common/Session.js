@@ -21,12 +21,18 @@ angular.module( 'Session', [] )
             return token;
         }
 
-        authService.logIn = function (credentials) {
+        authService.login = function (credentials) {
             return $http
             .post(SERVER_ADRESS + '/Stalker/Login', credentials)
             .then(function (res) {
                 return updateToken(res.data.token);
             });
+        };
+        
+        authService.logout = function() {
+            var d = $q.defer();
+            d.resolve(updateToken(null));
+            return d.promise;
         };
         
         authService.getToken = function() {

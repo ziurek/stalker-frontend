@@ -19,8 +19,8 @@ angular.module( 'ngBoilerplate.guest.login', [
     $scope.username = "tester";
     $scope.password = "testowe";
     
-    $scope.logIn = function() {
-        Session.logIn({
+    $scope.login = function() {
+        Session.login({
             login: $scope.username,
             password: $scope.password
         })
@@ -29,8 +29,8 @@ angular.module( 'ngBoilerplate.guest.login', [
         });
     };
     
-    $scope.canLogIn = function() {
-        return $scope.username !== "" && $scope.password !== "";
+    $scope.canLogin = function() {
+        return $scope.username && $scope.password;
     };
 })
 
