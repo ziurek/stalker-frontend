@@ -25,21 +25,19 @@ angular.module('ngBoilerplate.home', [
                 '$http',
                 'SERVER_ADRESS',
                 'token',
-
                 function (
                     $http,
                     SERVER_ADRESS,
                     token
                 ) {
-                    var headers = {
-                        "X-Auth-Token": token
-                    };
+                    var headers = {};
+                    headers['X-Auth-Token'] = token;
 
                     function wrapMethod (method) {
                         return function (url, data) {
                             return $http({
                                 method: method,
-                                headers: headers,
+                                headers: JSON.parse(JSON.stringify(headers)),
                                 url: SERVER_ADRESS + url,
                                 data: data
                             })

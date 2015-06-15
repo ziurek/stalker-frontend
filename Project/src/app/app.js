@@ -14,6 +14,12 @@ angular.module( 'ngBoilerplate', [
   $urlRouterProvider.otherwise( '/login' );
 })
 
+.config(['$httpProvider', function ($httpProvider) {
+    $httpProvider.defaults.headers.common['Accept'] = 'application/json';
+    $httpProvider.defaults.useXDomain = true;
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
+}])
+
 .config( function( uiGmapGoogleMapApiProvider ) {
     uiGmapGoogleMapApiProvider.configure({
         //    key: 'your api key',
