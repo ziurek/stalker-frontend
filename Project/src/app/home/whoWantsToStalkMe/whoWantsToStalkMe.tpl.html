@@ -1,0 +1,24 @@
+<div class="container-fluid">
+    <div class="col-sm-10 col-sm-offset-1">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h4>Who wants to stalk me?</h4></div>
+            <div class="panel-body">
+                <table class="table table-striped">
+                    <tr>
+                        <th>Username</th>
+                        <th>Name</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr ng-repeat="stalk in stalkingList">
+                        <td class="col-sm-5">{{stalk.username}}</td>
+                        <td class="col-sm-4">{{stalk.name}}</td>
+                        <td class="col-sm-3">
+                            <button class="btn btn-xs btn-primary" ng-click="approve(stalk)">Approve</button>
+                            <button class="btn btn-xs btn-danger" ng-click="decline(stalk)">Decline</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

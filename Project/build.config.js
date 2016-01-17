@@ -27,7 +27,7 @@ module.exports = {
     coffeeunit: [ 'src/**/*.spec.coffee' ],
 
     atpl: [ 'src/app/**/*.tpl.html' ],
-    ctpl: [ 'src/common/**/*.tpl.html' ],
+    ctpl: [ 'src/common/**/**/*.tpl.html' ],
 
     html: [ 'src/index.html' ],
     less: 'src/less/main.less'
@@ -69,12 +69,21 @@ module.exports = {
       'vendor/angular-ui-router/release/angular-ui-router.js',
       'vendor/angular-ui-utils/modules/route/route.js',
       'vendor/ngstorage/ngStorage.min.js',
-      'vendor/lodash/dist/lodash.min.js',
-      'vendor/angular-google-maps/dist/angular-google-maps.min.js'
+      'vendor/lodash/lodash.min.js',
+      'vendor/angular-google-maps/dist/angular-google-maps.min.js',
+      'vendor/alertify.js/lib/alertify.min.js'
     ],
     css: [
+      'vendor/alertify.js/themes/alertify.core.css',
+      'vendor/alertify.js/themes/alertify.default.css'
     ],
     assets: [
+    ],
+    fonts: [
+      'vendor/bootstrap/fonts/glyphicons-halflings-regular.woff',
+      'vendor/bootstrap/fonts/glyphicons-halflings-regular.ttf',
+      'vendor/bootstrap/fonts/glyphicons-halflings-regular.svg',
+      'vendor/bootstrap/fonts/glyphicons-halflings-regular.eot'
     ]
   }
 };

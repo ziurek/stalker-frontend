@@ -1,0 +1,17 @@
+<div class="modal-content">
+    <form ng-submit="sendReq(model)">
+        <div class="modal-header">
+            <h4 class="modal-title">Send a request to follow someone</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="nameInput">Name of user you want to follow</label>
+                <input type="text" class="form-control" id="nameInput" placeholder="Name..." ng-model="model.username" required>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click="cancel()">Close</button>
+            <button type="submit" class="btn btn-primary">Send request</button>
+        </div>
+    </form>
+</div>

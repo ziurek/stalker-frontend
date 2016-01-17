@@ -5,10 +5,8 @@ angular.module( 'ngBoilerplate.guest', [
 ])
 .config(function config( $stateProvider ) {
   $stateProvider.state( 'guest', {
-//    url: '/home',
     views: {
       "main": {
-//        controller: 'HomeCtrl',
         templateUrl: 'guest/guest.tpl.html'
       },
       "navbar": {
@@ -17,6 +15,5 @@ angular.module( 'ngBoilerplate.guest', [
     },
     data:{ pageTitle: 'Guest' }
   });
-})
-;
+});
 

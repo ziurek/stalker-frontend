@@ -1,6 +1,15 @@
 <div class="div-wrapper">
     <ui-gmap-google-map id="main-map" center='map.center' zoom='map.zoom'>
-        <ui-gmap-markers models="markers" coords="'self'">
-        </ui-gmap-markers>
+        <ui-gmap-markers models="markers" coords="'self'"></ui-gmap-markers>
+
+        <ui-gmap-window options="window" show="window.show" coords="window.coords" closeClick="windowCloseClick()">
+            <div class="container-fluid">
+                <div class="row">User's e-mail: {{ selectedDevice.email }}</div>
+                <div class="row">User's name: {{ selectedDevice.name }}</div>
+                <div class="row">Latest position:</div>
+                <div class="row col-sm-offset-1">Latitude: {{ selectedDevice.latestPosition.latitude }}</div>
+                <div class="row col-sm-offset-1">Longitude: {{ selectedDevice.latestPosition.longitude }}</div>
+            </div>
+        </ui-gmap-window>
     </ui-gmap-google-map>
 </div>
