@@ -1,4 +1,4 @@
-# [Stalker Site]
+# Stalker Site
 
 Front-end application of project which purpose was to track mobile (Android) devices.
 It includes google map display, with devices markers.
